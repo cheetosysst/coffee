@@ -1,5 +1,4 @@
 import { type PropsWithChildren } from "react";
-// import React from "react";
 import Navbar from "./navbar";
 
 export default function Layout({ children }: PropsWithChildren) {
@@ -8,7 +7,7 @@ export default function Layout({ children }: PropsWithChildren) {
 			<Navbar />
 			<div className="flex flex-row">
 				<div className="flex flex-grow"></div>
-				<div className="w-[70%] transition-all md:w-[50%] lg:w-96">
+				<div className="w-[85%] px-2 transition-all md:w-[50%] lg:w-[36rem]">
 					{children}
 				</div>
 				<div className="flex flex-grow"></div>

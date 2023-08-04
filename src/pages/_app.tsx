@@ -1,8 +1,13 @@
-import { type AppType } from "next/dist/shared/lib/utils";
 import "~/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
+import type { AppProps } from "next/app";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
-	return <Component {...pageProps} />;
+const MyApp = ({ Component, pageProps }: AppProps) => {
+	return;
+	<>
+		<Component {...pageProps} />
+		<Analytics />
+	</>;
 };
 
 export default MyApp;

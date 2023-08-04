@@ -4,34 +4,40 @@ import { Minus, Plus } from "lucide-react";
 
 function NumberSelect({
 	name,
-	title,
-	defaultValue,
-	min,
-	max,
+	title = "",
+	value,
+	min = 0,
+	max = 800,
+	className = "",
+	step = 10,
+	onChange,
 }: {
 	name: string;
-	title: string;
-	defaultValue: number;
-	min: number;
-	max: number;
+	title?: string;
+	value: number;
+	min?: number;
+	max?: number;
+	className?: string;
+	step?: number;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
 	const waterRef = useRef<HTMLInputElement>(null);
 	const addWater = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		waterRef.current!.value = (
-			Number(waterRef.current!.value) + 10
+			Number(waterRef.current!.value) + step
 		).toString();
 	};
 	const removeWater = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		waterRef.current!.value = (
-			Number(waterRef.current!.value) - 10
+			Number(waterRef.current!.value) - step
 		).toString();
 	};
 
 	return (
-		<div className="flex flex-col">
-			<label>{title}</label>
+		<div className={`flex flex-col ${className}`}>
+			<label htmlFor={name}>{title}</label>
 			<div className="flex flex-row items-center gap-2">
 				<button
 					className="btn bg-base-200 transition-colors hover:bg-base-300"
@@ -41,13 +47,13 @@ function NumberSelect({
 				</button>
 				<input
 					type="number"
-					placeholder="Type here"
 					min={min}
 					max={max}
-					defaultValue={defaultValue}
 					name={name}
 					className="input-bordered input-accent input flex-grow "
 					ref={waterRef}
+					value={value}
+					onChange={onChange}
 				/>
 				<button
 					className="btn bg-base-200 transition-colors hover:bg-base-300"
@@ -83,9 +89,6 @@ function Slider({
 	const [value, setValue] = useState(defaultValue);
 	return (
 		<div className={`flex flex-col gap-1 ${className}`} {...props}>
-			<h2 className="select-none text-center font-serif text-3xl font-bold">
-				4:6 法
-			</h2>
 			<label className="select-none" htmlFor={name}>
 				{title}
 			</label>
