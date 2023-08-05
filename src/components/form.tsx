@@ -69,7 +69,7 @@ function NumberSelect({
 function Slider({
 	min = 1,
 	max = 5,
-	defaultValue = 3,
+	value = 3,
 	step = 1,
 	title = "",
 	name,
@@ -79,14 +79,13 @@ function Slider({
 }: {
 	min?: number;
 	max?: number;
-	defaultValue?: number;
+	value?: number;
 	step?: number;
 	title?: string;
 	name: string;
 	className?: string;
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
-	const [value, setValue] = useState(defaultValue);
 	return (
 		<div className={`flex flex-col gap-1 ${className}`} {...props}>
 			<label className="select-none" htmlFor={name}>
@@ -100,14 +99,11 @@ function Slider({
 					type="range"
 					min={min}
 					max={max}
-					defaultValue={defaultValue}
+					value={value}
 					className="range"
 					step={step}
 					name={name}
-					onChange={(e) => {
-						setValue(Number(e.target.value));
-						onChange(e);
-					}}
+					onChange={onChange}
 				/>
 			</div>
 			<div className="flex w-full select-none justify-between px-2 text-xs">

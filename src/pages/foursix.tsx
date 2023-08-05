@@ -9,6 +9,7 @@ export default function Brew() {
 	const [second, setSecond] = useState(0);
 	const [water, setWater] = useState(450);
 	const [beans, setBeans] = useState(30);
+	const [cups, setCups] = useState(3);
 
 	useEffect(() => {
 		if (!started) return;
@@ -24,10 +25,6 @@ export default function Brew() {
 		return () => clearInterval(timer);
 	}, [started]);
 
-	// useEffect(()=>{
-	// 	if (second>=300)
-	// })
-
 	const formHandler = (e: FormEvent) => {
 		e.preventDefault();
 		setSecond(0);
@@ -35,6 +32,7 @@ export default function Brew() {
 	};
 
 	const cupsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		setCups(Number(e.target.value));
 		setWater(Number(e.target.value) * 150);
 		setBeans(Number(e.target.value) * 10);
 	};
@@ -65,6 +63,7 @@ export default function Brew() {
 					<Slider
 						name="cups"
 						title="杯數"
+						value={cups}
 						onChange={cupsChangeHandler}
 					/>
 					<NumberSelect
@@ -89,21 +88,37 @@ export default function Brew() {
 					/>
 				</form>
 				<div
-					className={`mt-5 flex select-none flex-col items-center ${
+					className={`card mt-5 flex select-none flex-col items-center  ${
 						!started && "hidden"
 					} gap-4`}
 				>
-					<p className="flex flex-col">
-						<span className="font-mono text-5xl font-semibold">{`${
-							45 - (second % 45) < 10 ? "0" : ""
-						}${45 - (second % 45)}`}</span>
-						<span className="font-mono text-xl">
-							{formatTime(second)}
-						</span>
-					</p>
-					<button className="btn" onClick={stop}>
-						停止
-					</button>
+					<div className="card-body flex flex-col gap-4">
+						<p
+							className={`flex flex-col items-center rounded-lg p-2 transition-all duration-700 ${
+								second % 45 < 1
+									? "bg-secondary text-secondary-content"
+									: ""
+							}`}
+						>
+							<span className={`font-mono text-6xl`}>{`${
+								45 - (second % 45) < 10 ? "0" : ""
+							}${45 - (second % 45)}`}</span>
+							<span className="font-mono text-xl">
+								{formatTime(second)}
+							</span>
+						</p>
+						<p className="flex flex-col items-center">
+							<span className="font-mono tracking-wider">
+								目標重量
+							</span>
+							<span className="font-mono text-xl">
+								{((second / 45) | (0 + 1)) * (water / 5)}g
+							</span>
+						</p>
+						<button className="btn" onClick={stop}>
+							停止
+						</button>
+					</div>
 				</div>
 			</div>
 		</Layout>
