@@ -15,9 +15,9 @@ export default function Brew() {
 		if (!started) return;
 		const timer = setInterval(() => {
 			setSecond((prevSecond) => {
-				if (prevSecond >= 300) {
+				if (prevSecond >= 180) {
 					clearInterval(timer);
-					return 0;
+					return prevSecond;
 				}
 				return prevSecond + 1;
 			});
@@ -71,14 +71,14 @@ export default function Brew() {
 						title="水量"
 						value={water}
 						step={10}
-						onChange={(e) => setWater(Number(e.target.value))}
+						onIncrement={(value) => setWater(value)}
+						onDecrement={(value) => setWater(value)}
 					/>
 					<NumberSelect
 						name="beans"
 						title="豆子重量"
 						value={beans}
 						step={1}
-						onChange={(e) => setBeans(Number(e.target.value))}
 					/>
 					<input
 						type="submit"
@@ -108,7 +108,7 @@ export default function Brew() {
 							</span>
 						</p>
 						<p className="flex flex-col items-center">
-							<span className="font-mono tracking-wider">
+							<span className="font-normal tracking-widest">
 								目標重量
 							</span>
 							<span className="font-mono text-xl">

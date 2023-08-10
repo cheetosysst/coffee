@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import type { ChangeEvent, MouseEvent } from "react";
 import { Minus, Plus } from "lucide-react";
 
@@ -10,7 +10,8 @@ function NumberSelect({
 	max = 800,
 	className = "",
 	step = 10,
-	onChange,
+	onIncrement,
+	onDecrement,
 }: {
 	name: string;
 	title?: string;
@@ -19,20 +20,21 @@ function NumberSelect({
 	max?: number;
 	className?: string;
 	step?: number;
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	onIncrement?: (value: number) => void;
+	onDecrement?: (value: number) => void;
 }) {
 	const waterRef = useRef<HTMLInputElement>(null);
 	const addWater = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		waterRef.current!.value = (
-			Number(waterRef.current!.value) + step
-		).toString();
+		const value = Number(waterRef.current!.value) + step;
+		waterRef.current!.value = value.toString();
+		onIncrement && onIncrement(value);
 	};
 	const removeWater = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		waterRef.current!.value = (
-			Number(waterRef.current!.value) - step
-		).toString();
+		const value = Number(waterRef.current!.value) + step;
+		waterRef.current!.value = value.toString();
+		onDecrement && onDecrement(value);
 	};
 
 	return (
@@ -53,7 +55,6 @@ function NumberSelect({
 					className="input-bordered input-accent input flex-grow "
 					ref={waterRef}
 					value={value}
-					onChange={onChange}
 				/>
 				<button
 					className="btn bg-base-200 transition-colors hover:bg-base-300"
