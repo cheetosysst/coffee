@@ -112,7 +112,7 @@ export default function Brew() {
 								目標重量
 							</span>
 							<span className="font-mono text-xl">
-								{((second / 45) | (0 + 1)) * (water / 5)}g
+								{(Math.floor(second / 45) + 1) * (water / 5)}g
 							</span>
 						</p>
 						<button className="btn" onClick={stop}>
